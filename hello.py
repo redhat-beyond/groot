@@ -1,11 +1,12 @@
-from flask import Flask, Response
+from flask import Flask, render_template
+
 app = Flask(__name__)
-@app.route("/")
+
+@app.route("/", methods=['GET'])
+
 def index():
-    return Response("""
-    <h1 style='color: red;'>HEllO WORLD!</h1>
-    <p>GROOT @inc 2020</p>
-    <code>Flask is <em>awesome</em></code>
-    """), 200
+	return render_template('page.html')
+	
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+	
