@@ -14,30 +14,11 @@ What things you need to install the software and how to install them:
   * Download and Install [Vagrant](https://www.vagrantup.com/) and [Virtual Box](https://www.virtualbox.org/) on your local computer
   * Clone/ Download the zip file from the Groot repository to your local computer
 
-### How to Spin/Tear Down The Virtual Environment In General
-1. Open command prompt and execute the following commands:
-```
-vagrant init ubuntu/bionic64
-vagrant up
-```
-2. Log into the Virtual Machine using:
-```
-vagrant ssh
-```
-3. In the end of work, logout from the machine by:
-```
-exit
-```
-4. To destroy the Virtual Environment execute:
-```
-vagrant destroy -f
-```
-
 ### Initializing Project Groot Virtual Environment
 
 A step by step series that tell you how to get Project Groot up and running
 
-1. Copy the files from the Cloned/ Zip file and paste them into a local directory
+1. Clone + Fork the repository
 2. Open command prompt and navigate to the local directory where all the files are
 3. Spin the environment using:
   ```vagrant
