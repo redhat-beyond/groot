@@ -8,9 +8,9 @@ apt install -y python3-pip
 pip3 install --upgrade pip
 pip3 install Flask 
 
-cd /vagrant/
 
-FLASK_APP=hello.py
-sudo python3 hello.py >> log.txt 2>&1 &
+
+FLASK_APP=/vagrant/hello.py
+sudo python3 hello.py >> /vagrant/log.txt 2>&1 &
 
 exit 0
