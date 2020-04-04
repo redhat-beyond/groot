@@ -1,10 +1,8 @@
-import pytest
-import flask
-import os
-import tempfile
 import urllib.request
 
 SITE_LOCATION = "http://localhost:5000"
+
+
 def url_ok(url):
     try:
         r = urllib.request.urlopen(url).getcode()
