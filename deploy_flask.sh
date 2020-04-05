@@ -11,6 +11,6 @@ pip3 install Flask
 
 
 FLASK_APP=/vagrant/hello.py
-sudo python3 hello.py >> /vagrant/log.txt 2>&1 &
+python3 hello.py >> /vagrant/log.txt 2>&1 &
 
 exit 0
