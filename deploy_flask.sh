@@ -13,6 +13,6 @@ apt install -y postgresql postgresql-contrib
 cd /vagrant/
 
 FLASK_APP=hello.py
-sudo python3 hello.py >> log.txt 2>&1 &
+python3 hello.py >> log.txt 2>&1 &
 
 exit 0
