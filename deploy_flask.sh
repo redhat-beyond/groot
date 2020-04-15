@@ -14,4 +14,3 @@ FLASK_APP=/vagrant/hello.py
 python3 hello.py >> /vagrant/log.txt 2>&1 &
 
 exit 0
->>>>>>> master
