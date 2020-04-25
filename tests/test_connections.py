@@ -4,4 +4,6 @@ import pytest
 SITE_LOCATION = "http://localhost:5000"
 
 def test_connection():
-    assert urllib.request.urlopen(SITE_LOCATION) == 200 or 201 or 202
+    assert urllib.request.urlopen(SITE_LOCATION).getcode() == 200
+
+
