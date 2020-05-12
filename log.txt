@@ -1,0 +1,31 @@
+/tmp/vagrant-shell: line 21: flask: command not found
+ * Serving Flask app "/vagrant/run.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+10.0.2.2 - - [11/May/2020 19:54:09] "[37mGET / HTTP/1.1[0m" 200 -
+10.0.2.2 - - [11/May/2020 19:54:14] "[37mGET /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [11/May/2020 19:56:55] "[37mPOST /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [11/May/2020 19:56:57] "[37mGET /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [11/May/2020 19:57:03] "[37mPOST /register HTTP/1.1[0m" 200 -
+ * Serving Flask app "/vagrant/run.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+10.0.2.2 - - [12/May/2020 05:54:57] "[37mGET / HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:55:01] "[37mGET /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:55:01] "[37mGET /static/css/styles.css HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:55:02] "[37mGET /static/js/bs-init.js HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:55:02] "[37mGET /static/js/theme.js HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:55:02] "[37mGET /static/img/BG-register.png HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 05:59:52] "[37mGET / HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:11:47] "[37mGET / HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:11:51] "[37mGET /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:11:58] "[37mPOST /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:12:04] "[37mGET /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:12:12] "[37mPOST /register HTTP/1.1[0m" 200 -
+10.0.2.2 - - [12/May/2020 09:12:12] "[37mGET /static/img/BG-login.png HTTP/1.1[0m" 200 -
