@@ -1,0 +1,283 @@
+{% extends "layout.html" %}
+{% set active_page = "policies" %}
+
+{% block content %}
+<h3 class="text-dark mb-4">Policies</h3>
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-dark m-0 font-weight-bold">&lt;user&gt;'s Policies List</p>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 text-nowrap">
+                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                </div><a class="btn btn-success btn-sm d-none d-sm-inline-block" role="button" href="#"
+                    style="margin-right: 17px;"><i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;New Policy</a><a
+                    class="btn btn-dark btn-sm d-none d-sm-inline-block" role="button" href="#"
+                    style="margin-right: 17px;"><i class="fas fa-minus fa-sm text-white-50"></i>&nbsp;Delete
+                    Selected</a>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
+                            class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+            <table class="table dataTable my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Plant Type</th>
+                        <th>Humidity</th>
+                        <th>Light</th>
+                        <th>Irregation Frequency</th>
+                        <th>Irregation Amount</th>
+                        <th>Sensors</th>
+                        <th>Date Created</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group"><button class="btn btn-success active btn-sm"
+                                    type="button">Active&nbsp;</button><button
+                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
+                                        href="#">Deactivate</a></div>
+                            </div>
+                        </td>
+                        <td>Policy 1</td>
+                        <td>Mushrooms</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>134623415</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group"><button class="btn btn-success active btn-sm"
+                                    type="button">Active&nbsp;</button><button
+                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
+                                        href="#">Deactivate</a></div>
+                            </div>
+                        </td>
+                        <td>Policy 2</td>
+                        <td>Apple Tree</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>123423516</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group"><button class="btn btn-secondary active btn-sm"
+                                    type="button">Inactive&nbsp;</button><button
+                                    class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
+                                        href="#">Activate</a></div>
+                            </div>
+                        </td>
+                        <td>Policy 3</td>
+                        <td>Onions</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>546422261</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <div class="btn-group"><button class="btn btn-success active btn-sm"
+                                    type="button">Active&nbsp;</button><button
+                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
+                                        href="#">Deactivate</a></div>
+                            </div>
+                        </td>
+                        <td>Policy 4</td>
+                        <td>Weed</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td>7 (per week)</td>
+                        <td>3.1 L</td>
+                        <td>5</td>
+                        <td>03.05.2020</td>
+                        <td>132634633</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                    Showing 1 to 4 of 27</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow" style="margin-top: 25px;">
+    <div class="card-header py-3">
+        <p class="text-dark m-0 font-weight-bold">Community Available Policies</p>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 text-nowrap">
+                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
+                            class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+            <table class="table dataTable my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Author</th>
+                        <th>Plant Type</th>
+                        <th>Humidity</th>
+                        <th>Light</th>
+                        <th>Irregation Frequency</th>
+                        <th>Irregation Amount</th>
+                        <th>Sensors</th>
+                        <th>Date Created</th>
+                        <th>ID</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
+                                    type="button">Download</button><button class="btn btn-light btn-sm" type="button"
+                                    disabled=""><i class="fa fa-download"></i>&nbsp;15&nbsp;</button></div>
+                        </td>
+                        <td>Policy 1</td>
+                        <td>Avi</td>
+                        <td>Mushrooms</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>134623415</td>
+                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
+                            <button class="btn btn-sm text-center" type="button"
+                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
+                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
+                                    style="font-size: 26px;color: rgb(212,218,237);"></i></button><strong>89</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
+                                    type="button">Download</button><button class="btn btn-light btn-sm" type="button"
+                                    disabled=""><i class="fa fa-download"></i>&nbsp;13&nbsp;</button></div>
+                        </td>
+                        <td>Policy 2</td>
+                        <td>Moshe</td>
+                        <td>Apple Tree</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>123423516</td>
+                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
+                            <button class="btn btn-sm text-center" type="button"
+                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
+                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
+                                    style="font-size: 26px;color: rgb(28,200,138);"></i></button><strong>151</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
+                                    type="button">Download</button><button class="btn btn-light active btn-sm"
+                                    type="button" disabled=""><i class="fa fa-download"></i>&nbsp;9&nbsp;</button></div>
+                        </td>
+                        <td>Policy 3</td>
+                        <td>Yosi</td>
+                        <td>Onions</td>
+                        <td>15%</td>
+                        <td>73%</td>
+                        <td>4 (per week)</td>
+                        <td>0.4 L</td>
+                        <td>3</td>
+                        <td>03.05.2020</td>
+                        <td>546422261</td>
+                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
+                            <button class="btn btn-sm text-center" type="button"
+                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
+                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
+                                    style="font-size: 26px;color: rgb(28,200,138);"></i></button><strong>7</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
+                                    type="button">Download</button><button class="btn btn-light active btn-sm"
+                                    type="button" disabled=""><i class="fa fa-download"></i>&nbsp;2&nbsp;</button></div>
+                        </td>
+                        <td>Policy 4</td>
+                        <td>Gadi</td>
+                        <td>Weed</td>
+                        <td>100%</td>
+                        <td>100%</td>
+                        <td>7 (per week)</td>
+                        <td>3.1 L</td>
+                        <td>5</td>
+                        <td>03.05.2020</td>
+                        <td>132634633</td>
+                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
+                            <button class="btn btn-sm text-center" type="button"
+                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
+                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
+                                    style="font-size: 26px;color: rgb(212,218,237);"></i></button><strong>84</strong>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                    Showing 1 to 4 of 27</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

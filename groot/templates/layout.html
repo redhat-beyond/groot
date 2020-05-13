@@ -4,19 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Groot - Sensors</title>
+    {% if title %}
+    <title>Groot - {{ title }}</title>
+    {% else %}
+    <title>Welcome To GROOT</title>
+    {% endif %}
     <meta name="description" content="Plant a seed, Grow a community">
     <meta property="og:type" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/32x32.png">
-    <link rel="icon" type="image/png" sizes="180x180" href="assets/img/180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/img/192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="assets/img/512x512.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/img/16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/img/32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="../static/img/180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../static/img/192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../static/img/512x512.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/startbootstrap-sb-admin-2@4.0.7/css/sb-admin-2.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 
 <body id="page-top">
@@ -24,25 +28,67 @@
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-success p-0">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#"
-                    style="width: 100%;background-color: #282828;"><img src="assets/img/Logo(alpha)%20white.png"
+                    style="width: 100%;background-color: #282828;"><img src="../static/img/Logo(alpha)%20white.png"
                         style="width: 100px;"></a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="index.html"><i
-                                class="fas fa-tachometer-alt"
-                                style="color: rgb(40,40,40,0.3);font-size: 20px;width: 25px;"></i><span>Dashboard</span></a>
+
+                    {% set active_page = active_page|default('dashboard') -%}
+
+
+                    <li class="nav-item {% if active_page == 'dashboard' %} active {% endif%}" role="presentation">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            {% if active_page == 'dashboard' %}
+                            <i class="fas fa-tachometer-alt"
+                                style="color: rgb(40,40,40);font-size: 20px;width: 25px;"></i>
+                            {% else %}
+                            <i class="fas fa-tachometer-alt"
+                                style="color: rgb(40,40,40,0.3);font-size: 20px;width: 25px;"></i>
+                            {% endif%}
+                            <span>Dashboard</span>
+                        </a>
                     </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i
-                                class="fas fa-user"
-                                style="color: rgba(40,40,40,0.3);font-size: 20px;width: 25px;"></i><span>Profile</span></a>
+
+                    <li class="nav-item {% if active_page == 'profile' %} active {% endif%}" role="presentation">
+                        <a class="nav-link" href="{{ url_for('profile') }}">
+                            {% if active_page == 'profile' %}
+                            <i class="fas fa-user" style="color: rgba(40,40,40);font-size: 20px;width: 25px;"></i>
+                            {% else %}
+                            <i class="fas fa-user" style="color: rgba(40,40,40,0.3);font-size: 20px;width: 25px;"></i>
+                            {% endif%}
+                            <span>Profile</span>
+                        </a>
                     </li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="policies.html"><i
-                                class="fas fa-seedling"
-                                style="color: rgba(40,40,40,0.3);font-size: 20px;width: 25px;"></i><span>Policies</span></a><a
-                            class="nav-link active" href="sensors.html"><i class="fas fa-satellite-dish"
-                                style="color: rgba(40,40,40);font-size: 20px;width: 25px;"></i><span>Sensors</span></a>
+
+                    <li class="nav-item {% if active_page == 'policies' %} active {% endif%}" role="presentation">
+                        <a class="nav-link" href="{{ url_for('policies') }}">
+                            {% if active_page == 'policies' %}
+                            <i class="fas fa-seedling" style="color: rgba(40,40,40);font-size: 20px;width: 25px;"></i>
+                            {% else %}
+                            <i class="fas fa-seedling"
+                                style="color: rgba(40,40,40,0.3);font-size: 20px;width: 25px;"></i>
+                            {% endif%}
+                            <span>Policies</span>
+                        </a>
                     </li>
-                    <li class="nav-item" role="presentation"></li>
+
+
+                    <li class="nav-item {% if active_page == 'sensors' %} active {% endif%}" role="presentation">
+                        <a class="nav-link" href="{{ url_for('sensors') }}">
+                            {% if active_page == 'sensors' %}
+                            <i class="fas fa-satellite-dish"
+                                style="color: rgba(40,40,40);font-size: 20px;width: 25px;"></i>
+                            {% else %}
+                            <i class="fas fa-satellite-dish"
+                                style="color: rgba(40,40,40,0.3);font-size: 20px;width: 25px;"></i>
+                            {% endif%}
+                            <span>Sensors</span>
+                        </a>
+                    </li>
+
+
+
+
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
                         id="sidebarToggle" type="button"></button></div>
@@ -122,7 +168,7 @@
                                         data-toggle="dropdown" aria-expanded="false" href="#"><span
                                             class="d-none d-lg-inline mr-2 text-gray-600 small">Israel
                                             Israeli</span><img class="border rounded-circle img-profile"
-                                            src="assets/img/180x180.png"></a>
+                                            src="../static/img/180x180.png"></a>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
                                         <a class="dropdown-item" role="presentation" href="#"><i
                                                 class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
@@ -136,93 +182,7 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Sensors</h3>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <p class="text-dark m-0 font-weight-bold">&lt;user&gt;'s Sensors List</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                                    </div><a class="btn btn-success btn-sm d-none d-sm-inline-block" role="button"
-                                        href="#" style="margin-right: 17px;"><i
-                                            class="fas fa-plus fa-sm text-white-50"></i>&nbsp;New Policy</a><a
-                                        class="btn btn-danger btn-sm d-none d-sm-inline-block" role="button" href="#"
-                                        style="margin-right: 17px;"><i
-                                            class="fas fa-minus fa-sm text-white-50"></i>&nbsp;Delete Selected</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input
-                                                type="search" class="form-control form-control-sm"
-                                                aria-controls="dataTable" placeholder="Search"></label></div>
-                                </div>
-                            </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid"
-                                aria-describedby="dataTable_info">
-                                <table class="table dataTable my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Type</th>
-                                            <th>Status</th>
-                                            <th>Current Info</th>
-                                            <th>Date Added</th>
-                                            <th>ID</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Sensor 1</td>
-                                            <td>Light</td>
-                                            <td><i class="fa fa-check-circle"></i></td>
-                                            <td>73%</td>
-                                            <td>03.05.2020</td>
-                                            <td>134623415</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Sensor 2</td>
-                                            <td>Light</td>
-                                            <td><i class="fa fa-check-circle"></i></td>
-                                            <td>61%</td>
-                                            <td>03.05.2020</td>
-                                            <td>123423516</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Sensor 3</td>
-                                            <td>Humidity</td>
-                                            <td><i class="fa fa-times-circle"></i></td>
-                                            <td>Incative</td>
-                                            <td>03.05.2020</td>
-                                            <td>546422261</td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Sensor 4</td>
-                                            <td>Humidity</td>
-                                            <td><i class="fa fa-check-circle"></i></td>
-                                            <td>66 %</td>
-                                            <td>03.05.2020</td>
-                                            <td>132634633</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr></tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                                        Showing 1 to 4 of 27</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% block content %}{% endblock %}
                 </div>
             </div>
             <footer class="bg-white sticky-footer">
@@ -235,9 +195,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
+    <script src="../static/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="assets/js/theme.js"></script>
+    <script src="../static/js/theme.js"></script>
 </body>
 
 </html>

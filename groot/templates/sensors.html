@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% set active_page = "sensors" %}
+
+{% block content %}
+<h3 class="text-dark mb-4">Sensors</h3>
+<div class="card shadow">
+    <div class="card-header py-3">
+        <p class="text-dark m-0 font-weight-bold">&lt;user&gt;'s Sensors List</p>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 text-nowrap">
+                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                </div><a class="btn btn-success btn-sm d-none d-sm-inline-block" role="button" href="#"
+                    style="margin-right: 17px;"><i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;New Policy</a><a
+                    class="btn btn-danger btn-sm d-none d-sm-inline-block" role="button" href="#"
+                    style="margin-right: 17px;"><i class="fas fa-minus fa-sm text-white-50"></i>&nbsp;Delete
+                    Selected</a>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
+                            class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+            <table class="table dataTable my-0" id="dataTable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Current Info</th>
+                        <th>Date Added</th>
+                        <th>ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Sensor 1</td>
+                        <td>Light</td>
+                        <td><i class="fa fa-check-circle"></i></td>
+                        <td>73%</td>
+                        <td>03.05.2020</td>
+                        <td>134623415</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Sensor 2</td>
+                        <td>Light</td>
+                        <td><i class="fa fa-check-circle"></i></td>
+                        <td>61%</td>
+                        <td>03.05.2020</td>
+                        <td>123423516</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Sensor 3</td>
+                        <td>Humidity</td>
+                        <td><i class="fa fa-times-circle"></i></td>
+                        <td>Incative</td>
+                        <td>03.05.2020</td>
+                        <td>546422261</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>Sensor 4</td>
+                        <td>Humidity</td>
+                        <td><i class="fa fa-check-circle"></i></td>
+                        <td>66 %</td>
+                        <td>03.05.2020</td>
+                        <td>132634633</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr></tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-6 align-self-center">
+                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                    Showing 1 to 4 of 27</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
