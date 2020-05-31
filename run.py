@@ -1,5 +1,8 @@
 from flask import Flask, Response, render_template, request, redirect, url_for, flash
-from groot import app
+from groot import app, db
+from groot.models import *
+
+db.create_all()
 
 
 @app.route("/")
