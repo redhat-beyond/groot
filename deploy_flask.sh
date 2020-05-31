@@ -12,5 +12,5 @@ pip3 install -r /vagrant/requirements.txt
 sudo -u postgres createdb groot
 sudo -u postgres psql -c "ALTER ROLE postgres WITH PASSWORD 'groot';"
 
-export FLASK_APP=/vagrant/hello.py
+export FLASK_APP=/vagrant/run.py
 flask run -h 0.0.0.0 -p $FLASK_PORT >> /vagrant/log.txt 2>&1 &
