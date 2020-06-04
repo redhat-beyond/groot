@@ -37,6 +37,14 @@ A step by step series that tell you how to get Project Groot up and running
 * [Vagrant](https://www.vagrantup.com/) - Vagrant is a tool for building and managing virtual machine environments in a single workflow
 * [Virtual-Box](https://www.virtualbox.org/) - VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as home use
 
+## Contributing
+
+Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute to the Groot community.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+
+
+
