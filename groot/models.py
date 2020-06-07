@@ -1,5 +1,11 @@
 from datetime import datetime
-from groot import db
+from groot import db, login_manager
+from flask_login import UserMixin
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 policies_users = db.Table('policies_users',
@@ -11,7 +17,7 @@ sensors_policies = db.Table('sensors_policies',
                        db.Column('sensor_id', db.Integer, db.ForeignKey('sensors.id')))
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     __table_args__ = {'extend_existing': True}
 
