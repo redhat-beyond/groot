@@ -5,7 +5,7 @@
 <h3 class="text-dark mb-4">Policies</h3>
 <div class="card shadow">
     <div class="card-header py-3">
-        <p class="text-dark m-0 font-weight-bold">&lt;user&gt;'s Policies List</p>
+        <p class="text-dark m-0 font-weight-bold">{{ current_user.first_name }}'s Policies List</p>
     </div>
     <div class="card-body">
         <div class="row">
@@ -41,90 +41,45 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for policy in user_policies %}
                     <tr>
                         <td><input type="checkbox"></td>
                         <td>
-                            <div class="btn-group"><button class="btn btn-success active btn-sm"
-                                    type="button">Active&nbsp;</button><button
-                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                            {% if policy.status == 'True' %}
+                            <div class="btn-group">
+                                <button class="btn btn-success active btn-sm" type="button">
+                                    Active&nbsp;
+                                </button>
+                                <button class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                        href="#">Deactivate</a></div>
+                                <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item" role="presentation" href="#">Deactivate</a>
+                                </div>
                             </div>
-                        </td>
-                        <td>Policy 1</td>
-                        <td>Mushrooms</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>134623415</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>
-                            <div class="btn-group"><button class="btn btn-success active btn-sm"
-                                    type="button">Active&nbsp;</button><button
-                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
+                            {% else %}
+                            <div class="btn-group">
+                                <button class="btn btn-secondary active btn-sm" type="button">
+                                    Inactive&nbsp;
+                                </button>
+                                <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                        href="#">Deactivate</a></div>
+                                <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item" role="presentation" href="#">Activate</a>
+                                </div>
                             </div>
+                            {% endif%}
                         </td>
-                        <td>Policy 2</td>
-                        <td>Apple Tree</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>123423516</td>
+                        <td>{{ policy.name }}</td>
+                        <td>{{ policy.plant_type }}</td>
+                        <td>{{ policy.humidity }}</td>
+                        <td>{{ policy.light }}</td>
+                        <td>{{ policy.irregation_frequency }}</td>
+                        <td>{{ policy.irregation_amount }}</td>
+                        <td>{{ policy.sensors }}</td>
+                        <td>{{ policy.date_created }}</td>
+                        <td>{{ policy.id }}</td>
                     </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>
-                            <div class="btn-group"><button class="btn btn-secondary active btn-sm"
-                                    type="button">Inactive&nbsp;</button><button
-                                    class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                        href="#">Activate</a></div>
-                            </div>
-                        </td>
-                        <td>Policy 3</td>
-                        <td>Onions</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>546422261</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>
-                            <div class="btn-group"><button class="btn btn-success active btn-sm"
-                                    type="button">Active&nbsp;</button><button
-                                    class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-toggle="dropdown" aria-expanded="false" type="button"></button>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation"
-                                        href="#">Deactivate</a></div>
-                            </div>
-                        </td>
-                        <td>Policy 4</td>
-                        <td>Weed</td>
-                        <td>100%</td>
-                        <td>100%</td>
-                        <td>7 (per week)</td>
-                        <td>3.1 L</td>
-                        <td>5</td>
-                        <td>03.05.2020</td>
-                        <td>132634633</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr></tr>
@@ -134,7 +89,12 @@
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                    Showing 1 to 4 of 27</p>
+                    {% if user_policies|length > 0 %}
+                    Showing 1 to {{ user_policies|length }}
+                    {% else %}
+                    You have no policies
+                    {% endif%}
+                </p>
             </div>
         </div>
     </div>

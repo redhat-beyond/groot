@@ -57,25 +57,26 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="form-group"><label
-                                            for="username"><strong>Username</strong></label><input class="form-control"
-                                            type="text" placeholder="user.name" name="username"></div>
+                                            for="username"><strong>Nickname</strong></label><input class="form-control"
+                                            type="text" placeholder="{{ current_user.nick_name }}" name="nickname">
+                                    </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group"><label for="email"><strong>Email
                                                 Address</strong></label><input class="form-control" type="email"
-                                            placeholder="user@example.com" name="email"></div>
+                                            placeholder="{{ current_user.email }}" name="email"></div>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col">
                                     <div class="form-group"><label for="first_name"><strong>First
                                                 Name</strong></label><input class="form-control" type="text"
-                                            placeholder="John" name="first_name"></div>
+                                            placeholder="{{ current_user.first_name }}" name="first_name"></div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group"><label for="last_name"><strong>Last
                                                 Name</strong></label><input class="form-control" type="text"
-                                            placeholder="Doe" name="last_name"></div>
+                                            placeholder="{{ current_user.last_name }}" name="last_name"></div>
                                 </div>
                             </div>
                             <div class="form-group"><button class="btn btn-success btn-sm" type="submit">Save
