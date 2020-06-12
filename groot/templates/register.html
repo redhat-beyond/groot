@@ -30,42 +30,97 @@
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
                             <div class="text-center">
                                 <h4 class="text-dark mb-4">Create an Account!</h4>
                             </div>
                             <form class="user" method="POST" action="register">
+                                {{ form.hidden_tag() }}
                                 <div class="form-group row">
-
                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                        <input class="form-control form-control-user" type="text" id="exampleFirstName"
-                                            placeholder="First Name" name="first_name">
+                                        {% if form.first_name.errors %}
+                                        {{ form.first_name(class="form-control form-control-user is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.first_name.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.first_name(class="form-control form-control-user") }}
+                                        {% endif %}
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="form-control form-control-user" type="text" id="exampleFirstName"
-                                            placeholder="Last Name" name="last_name">
+                                        {% if form.last_name.errors %}
+                                        {{ form.last_name(class="form-control form-control-user is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.last_name.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.last_name(class="form-control form-control-user") }}
+                                        {% endif %}
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="form-control form-control-user" type="text" id="exampleNickName"
-                                            placeholder="Nickname" name="nick_name">
+                                        {% if form.nickname.errors %}
+                                        {{ form.nickname(class="form-control form-control-user is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.nickname.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.nickname(class="form-control form-control-user") }}
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control form-control-user" type="email" id="exampleInputEmail"
-                                        aria-describedby="emailHelp" placeholder="Email Address" name="email">
+                                    {% if form.email.errors %}
+                                    {{ form.email(class="form-control form-control-user is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.email(class="form-control form-control-user") }}
+                                    {% endif %}
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input class="form-control form-control-user" type="password"
-                                            id="examplePasswordInput" placeholder="Password" name="password">
+                                        {% if form.password.errors %}
+                                        {{ form.password(class="form-control form-control-user is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.password.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.password(class="form-control form-control-user") }}
+                                        {% endif %}
                                     </div>
                                     <div class="col-sm-6">
-                                        <input class="form-control form-control-user" type="password"
-                                            id="exampleRepeatPasswordInput" placeholder="Repeat Password"
-                                            name="password_repeat">
+                                        {% if form.confirm_password.errors %}
+                                        {{ form.confirm_password(class="form-control form-control-user is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.confirm_password.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ form.confirm_password(class="form-control form-control-user") }}
+                                        {% endif %}
                                     </div>
                                 </div>
-                                <button class="btn btn-success btn-block text-white btn-user" type="submit">Register
-                                    Account</button>
+                                {{ form.submit(class="btn btn-success btn-block text-white btn-user") }}
                                 <hr><a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i
                                         class="fab fa-google"></i>&nbsp; Register with Google</a><a
                                     class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i

@@ -13,4 +13,5 @@ sudo -u postgres createdb groot
 sudo -u postgres psql -c "ALTER ROLE postgres WITH PASSWORD 'groot';"
 
 export FLASK_APP=/vagrant/run.py
+export FLASK_ENV=development
 flask run -h 0.0.0.0 -p $FLASK_PORT >> /vagrant/log.txt 2>&1 &

@@ -1,4 +1,5 @@
 from flask import Flask, Response, render_template, request, redirect, url_for, flash, abort
+from groot.forms import RegistrationForm, LoginForm
 from run import app, db
 from groot.models import *
 from flask_login import login_user, current_user, logout_user, login_required
@@ -71,39 +72,53 @@ user_policies = [
 @app.route("/")
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == 'POST':
-        try:
-            if current_user.is_authenticated:
-                return redirect(url_for('dashboard'))
-            user_data = request.form.to_dict()
-            if is_user_data_valid(user_data):
-                user = User.query.filter_by(email=user_data['email']).first()
-                login_user(user)
-                next_page = request.args.get('next')
-                return redirect(next_page) if next_page else redirect(url_for('dashboard'))
-            return redirect(url_for('login'))
-        except:
-            abort(404)
-    else:
-        return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+            flash('You have been logged in!', 'success')
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Login unsuccessful!. Please check username and password', 'danger')
+    return render_template('login.html', title='Login', form=form)
+    # if request.method == 'POST':
+    #     try:
+    #         if current_user.is_authenticated:
+    #             return redirect(url_for('dashboard'))
+    #         user_data = request.form.to_dict()
+    #         if is_user_data_valid(user_data):
+    #             user = User.query.filter_by(email=user_data['email']).first()
+    #             login_user(user)
+    #             next_page = request.args.get('next')
+    #             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
+    #         return redirect(url_for('login'))
+    #     except:
+    #         abort(404)
+    # else:
+    #     return render_template('login.html')
 
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
-    if request.method == 'POST':
-        try:
-            if current_user.is_authenticated:
-                return redirect(url_for('dashboard'))
-            user_data = request.form.to_dict()
-            user_data['password'] = create_encrypted_password(
-                user_data['password'])
-            save_user_to_database(user_data)
-            flash('Your account has been created! You are now able to log in', 'success')
-            return redirect(url_for('login'))
-        except:
-            abort(404, description="Unknown error occured")
-    else:
-        return render_template('register.html')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash("Account created for {}!".format(
+            form.first_name.data), 'success')
+        return redirect(url_for('dashboard'))
+    return render_template('register.html', title='Register', form=form)
+    # if request.method == 'POST':
+    #     try:
+    #         if current_user.is_authenticated:
+    #             return redirect(url_for('dashboard'))
+    #         user_data = request.form.to_dict()
+    #         user_data['password'] = create_encrypted_password(
+    #             user_data['password'])
+    #         save_user_to_database(user_data)
+    #         flash('Your account has been created! You are now able to log in', 'success')
+    #         return redirect(url_for('login'))
+    #     except:
+    #         abort(404, description="Unknown error occured")
+    # else:
+    #     return render_template('register.html')
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
