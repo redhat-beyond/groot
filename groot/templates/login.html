@@ -32,26 +32,54 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
+                                    {% with messages = get_flashed_messages(with_categories=true) %}
+                                    {% if messages %}
+                                    {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {{ message }}
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome to Groot!</h4>
                                     </div>
                                     <form class="user" method="POST" action="login">
-                                        <div class="form-group"><input class="form-control form-control-user"
-                                                type="email" id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="email"></div>
-                                        <div class="form-group"><input class="form-control form-control-user"
-                                                type="password" id="exampleInputPassword" placeholder="Password"
-                                                name="password"></div>
+                                        {{ form.hidden_tag() }}
+
+                                        <div class="form-group">
+                                            {% if form.email.errors %}
+                                            {{ form.email(class="form-control form-control-user is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.email.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.email(class="form-control form-control-user") }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            {% if form.password.errors %}
+                                            {{ form.password(class="form-control form-control-user is-invalid") }}
+                                            <div class="invalid-feedback">
+                                                {% for error in form.password.errors %}
+                                                <span>{{ error }}</span>
+                                                {% endfor %}
+                                            </div>
+                                            {% else %}
+                                            {{ form.password(class="form-control form-control-user") }}
+                                            {% endif %}
+                                        </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input
-                                                        class="form-check-input custom-control-input" type="checkbox"
-                                                        id="formCheck-1"><label
-                                                        class="form-check-label custom-control-label"
-                                                        for="formCheck-1">Remember Me</label></div>
+                                                <div class="form-check">
+                                                    {{ form.remember(class="form-check-input custom-control-input") }}
+                                                    {{ form.remember.label(class="form-check-label custom-control-label") }}
+                                                </div>
                                             </div>
-                                        </div><button class="btn btn-success btn-block text-white btn-user"
-                                            type="submit">Login</button>
+                                        </div>
+                                        {{ form.submit(class="btn btn-success btn-block text-white btn-user") }}
                                         <hr><a class="btn btn-primary btn-block text-white btn-google btn-user"
                                             role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a><a
                                             class="btn btn-primary btn-block text-white btn-facebook btn-user"
@@ -61,7 +89,7 @@
                                     </form>
                                     <div class="text-center"><a class="small" href="forgot-password.html">Forgot
                                             Password?</a></div>
-                                    <div class="text-center"><a class="small" href="register.html">Create an
+                                    <div class="text-center"><a class="small" href="{{ url_for('register') }}">Create an
                                             Account!</a></div>
                                 </div>
                             </div>
