@@ -1,7 +1,7 @@
 from flask import Flask, Response, render_template, request, redirect, url_for, flash, abort
-from groot.forms import RegistrationForm, LoginForm
 from run import app, db
 from groot.models import *
+from groot.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user, login_required
 import hashlib
 
@@ -72,14 +72,19 @@ user_policies = [
 @app.route("/")
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('dashboard'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.password == create_encrypted_password(form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
-            flash('Login unsuccessful!. Please check username and password', 'danger')
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
     # if request.method == 'POST':
     #     try:
     #         if current_user.is_authenticated:
@@ -99,12 +104,19 @@ def login():
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash("Account created for {}!".format(
-            form.first_name.data), 'success')
-        return redirect(url_for('dashboard'))
+        hashed_password = create_encrypted_password(form.password.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data,
+                    nick_name=form.nick_name.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash('Your account has been created! You are now able to log in', 'success')
+        return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
     # if request.method == 'POST':
     #     try:
     #         if current_user.is_authenticated:
@@ -118,7 +130,7 @@ def register():
     #     except:
     #         abort(404, description="Unknown error occured")
     # else:
-    #     return render_template('register.html')
+    #     return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -152,24 +164,24 @@ def logout():
     return redirect(url_for('login'))
 
 
-def is_user_data_valid(user_data):
-    user = User.query.filter_by(email=user_data['email']).first()
-    if not user:
-        flash('Inccorect email! Please try again.', 'danger')
-        return False
-    if user.password != create_encrypted_password(user_data['password']):
-        flash('Inccorect password! Please try again.', 'danger')
-        return False
-    return True
+# def is_user_data_valid(user_data):
+#     user = User.query.filter_by(email=user_data['email']).first()
+#     if not user:
+#         flash('Inccorect email! Please try again.', 'danger')
+#         return False
+#     if user.password != create_encrypted_password(user_data['password']):
+#         flash('Inccorect password! Please try again.', 'danger')
+#         return False
+#     return True
 
 
 def create_encrypted_password(password):
     return hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
 
 
-def save_user_to_database(user_data):
-    user = User(email=user_data['email'], first_name=user_data['first_name'],
-                last_name=user_data['last_name'], nick_name=user_data['nick_name'],
-                password=user_data['password'])
-    db.session.add(user)
-    db.session.commit()
+# def save_user_to_database(user_data):
+#     user = User(email=user_data['email'], first_name=user_data['first_name'],
+#                 last_name=user_data['last_name'], nick_name=user_data['nick_name'],
+#                 password=user_data['password'])
+#     db.session.add(user)
+#     db.session.commit()

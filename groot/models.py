@@ -91,6 +91,5 @@ class Comment(db.Model):
     policy_id = db.Column(db.Integer, db.ForeignKey(
         'policies.id'), nullable=False)
 
-
     def __repr__(self):
         return {'id': self.id, 'title': self.title, 'content': self.content, 'date_posted': self.date_posted}

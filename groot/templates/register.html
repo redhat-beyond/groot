@@ -70,15 +70,15 @@
                                         {% endif %}
                                     </div>
                                     <div class="col-sm-4">
-                                        {% if form.nickname.errors %}
-                                        {{ form.nickname(class="form-control form-control-user is-invalid") }}
+                                        {% if form.nick_name.errors %}
+                                        {{ form.nick_name(class="form-control form-control-user is-invalid") }}
                                         <div class="invalid-feedback">
-                                            {% for error in form.nickname.errors %}
+                                            {% for error in form.nick_name.errors %}
                                             <span>{{ error }}</span>
                                             {% endfor %}
                                         </div>
                                         {% else %}
-                                        {{ form.nickname(class="form-control form-control-user") }}
+                                        {{ form.nick_name(class="form-control form-control-user") }}
                                         {% endif %}
                                     </div>
                                 </div>
