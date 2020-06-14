@@ -67,6 +67,18 @@ def policies():
     return render_template('policies.html', title='Policies', user_policies=user_policies, form=form, image_file=image_file)
 
 
+@app.route("/policy/<int:policy_id>/toggle", methods=['POST'])
+@login_required
+def toggle_policy(policy_id):
+    policy = Policy.query.get_or_404(policy_id)
+    if policy.writer != current_user.id:
+        abort(403)
+    policy.is_active = not policy.is_active
+    db.session.commit()
+    flash('Your Policy has been toggled!', 'success')
+    return redirect(url_for('policies'))
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
