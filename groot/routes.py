@@ -79,6 +79,18 @@ def toggle_policy(policy_id):
     return redirect(url_for('policies'))
 
 
+@app.route("/policy/<int:policy_id>/delete", methods=['POST'])
+@login_required
+def delete_policy(policy_id):
+    policy = Policy.query.get_or_404(policy_id)
+    if policy.writer != current_user.id:
+        abort(403)
+    db.session.delete(policy)
+    db.session.commit()
+    flash('Your policy has been deleted!', 'success')
+    return redirect(url_for('policies'))
+
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
