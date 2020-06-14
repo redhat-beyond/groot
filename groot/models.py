@@ -28,6 +28,8 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(30), nullable=False, unique=False)
     last_name = db.Column(db.String(30), nullable=False, unique=False)
     nick_name = db.Column(db.String(30), nullable=False, unique=False)
+    image_file = db.Column(db.String(50), nullable=False,
+                           default='default_profile.png')
     password = db.Column(db.String(200), nullable=False, unique=False)
     policies_wrote = db.relationship("Policy", backref="owner", lazy=True)
     comments_wrote = db.relationship("Comment", backref="author", lazy=True)
