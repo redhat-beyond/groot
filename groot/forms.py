@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FloatField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
 from groot.models import User, Policy
 
@@ -63,10 +63,10 @@ class NewPolicyForm(FlaskForm):
         min=2, max=20)], render_kw={"placeholder": "Policie's name..."})
     plant_type = StringField('Plant Type', validators=[DataRequired(), Length(
         min=2, max=30)], render_kw={"placeholder": "Plant's type..."})
-    humidity = StringField('Humidity (%)', validators=[DataRequired()], render_kw={
-                           "placeholder": "Humidity percentage, example value: 0.15"})
-    amount_light = StringField('Light Amount (%)', validators=[DataRequired()], render_kw={
-                               "placeholder": "Light percentage, example value: 0.15"})
+    humidity = FloatField('Humidity (%)', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
+                           "placeholder": "Humidity percentage, example value: 15"})
+    amount_light = FloatField('Light Amount (%)', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
+                               "placeholder": "Light percentage, example value: 15"})
     irregation_frequency = StringField('Irregation Frequency', validators=[
                                        DataRequired()], render_kw={"placeholder": "Times per week"})
     irregation_amount = StringField('Irregation Amount', validators=[
