@@ -1,6 +1,19 @@
+<div align="center">
+
+![](groot/static/img/readme_pics/Logo.png)
+
+</div>
+
 # Project Groot 🌱
 
 Project Groot is an open-source garden management system. In its core, Project Groot is a regular automatic plant growing system: it reads data from humidity and light sensors and decides when to give the plants more water, less water, more light or less light. What differentiates Project Groot from other garden management systems, is that it allows users to write their own growth plans for different plants. Users can then share their growth plans through the Groot network and users can also download and review plans from other users. Project Groot can also manage various plants with different sensors and growth plans at the same time.
+
+## Screenshots
+
+![Registration Page](groot/static/img/readme_pics/UI1.png)
+![Main Dashboard](groot/static/img/readme_pics/UI2.png)
+![Profile Management](groot/static/img/readme_pics/UI3.png)
+![Growth Policies](groot/static/img/readme_pics/UI4.png)
 
 ## Getting Started
 
@@ -9,7 +22,6 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 What things you need to install the software and how to install them:
-
 
   * Download and Install [Vagrant](https://www.vagrantup.com/) and [Virtual Box](https://www.virtualbox.org/) on your local computer
   * Clone/ Download the zip file from the Groot repository to your local computer
