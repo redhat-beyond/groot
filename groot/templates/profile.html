@@ -6,46 +6,24 @@
 <div class="row mb-3">
     <div class="col-lg-4">
         <div class="card mb-3">
-            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4"
-                    src="../static/img/180x180.png" width="160" height="160">
-                <div class="mb-3"><button class="btn btn-success btn-sm" type="button">Change
-                        Photo</button></div>
+            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="{{ image_file }}"
+                    width="160" height="160">
+                <div class="mb-3">
+                    <form method="POST" acction="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+
+                        {{ form.picture.label }}
+                        {{ form.picture(class="btn btn-sm") }}
+                        {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                        <br /><span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                </div>
             </div>
         </div>
     </div>
     <div class="col-lg-8">
-        <div class="row mb-3 d-none">
-            <div class="col">
-                <div class="card text-white bg-primary shadow">
-                    <div class="card-body">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p class="m-0">Peformance</p>
-                                <p class="m-0"><strong>65.2%</strong></p>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                        </div>
-                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5%
-                            since last month</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card text-white bg-success shadow">
-                    <div class="card-body">
-                        <div class="row mb-2">
-                            <div class="col">
-                                <p class="m-0">Peformance</p>
-                                <p class="m-0"><strong>65.2%</strong></p>
-                            </div>
-                            <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
-                        </div>
-                        <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5%
-                            since last month</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col">
                 <div class="card shadow mb-3">
@@ -53,34 +31,95 @@
                         <p class="text-dark m-0 font-weight-bold">User Settings</p>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group"><label
-                                            for="username"><strong>Nickname</strong></label><input class="form-control"
-                                            type="text" placeholder="{{ current_user.nick_name }}" name="nickname">
+
+
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form.nick_name.label(class="form-control-label") }}
+
+                                    {% if form.nick_name.errors %}
+                                    {{ form.nick_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.nick_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group"><label for="email"><strong>Email
-                                                Address</strong></label><input class="form-control" type="email"
-                                            placeholder="{{ current_user.email }}" name="email"></div>
+                                    {% else %}
+                                    {{ form.nick_name(class="form-control") }}
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group"><label for="first_name"><strong>First
-                                                Name</strong></label><input class="form-control" type="text"
-                                            placeholder="{{ current_user.first_name }}" name="first_name"></div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group"><label for="last_name"><strong>Last
-                                                Name</strong></label><input class="form-control" type="text"
-                                            placeholder="{{ current_user.last_name }}" name="last_name"></div>
+                            <div class="col">
+                                <div class="form-group">
+
+                                    {{ form.email.label(class="form-control-label") }}
+
+                                    {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.email(class="form-control") }}
+                                    {% endif %}
+
                                 </div>
                             </div>
-                            <div class="form-group"><button class="btn btn-success btn-sm" type="submit">Save
-                                    Settings</button></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    {{ form.first_name.label(class="form-control-label") }}
+
+                                    {% if form.first_name.errors %}
+                                    {{ form.first_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.first_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.first_name(class="form-control") }}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+
+                                    {{ form.last_name.label(class="form-control-label") }}
+
+                                    {% if form.last_name.errors %}
+                                    {{ form.last_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.last_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.last_name(class="form-control") }}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-success btn-sm") }}
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -89,7 +128,7 @@
                         <p class="text-dark m-0 font-weight-bold">Contact Settings</p>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form method="POST">
                             <div class="form-group"><label for="address"><strong>Address</strong></label><input
                                     class="form-control" type="text" placeholder="Sunset Blvd, 38" name="address"></div>
                             <div class="form-row">

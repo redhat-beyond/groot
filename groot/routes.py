@@ -1,7 +1,10 @@
+import os
+import secrets
+from PIL import Image
 from flask import Flask, Response, render_template, request, redirect, url_for, flash, abort
 from run import app, db
 from groot.models import *
-from groot.forms import RegistrationForm, LoginForm
+from groot.forms import RegistrationForm, LoginForm, UpdateProfileForm
 from flask_login import login_user, current_user, logout_user, login_required
 import hashlib
 
@@ -85,22 +88,6 @@ def login():
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
-    # if request.method == 'POST':
-    #     try:
-    #         if current_user.is_authenticated:
-    #             return redirect(url_for('dashboard'))
-    #         user_data = request.form.to_dict()
-    #         if is_user_data_valid(user_data):
-    #             user = User.query.filter_by(email=user_data['email']).first()
-    #             login_user(user)
-    #             next_page = request.args.get('next')
-    #             return redirect(next_page) if next_page else redirect(url_for('dashboard'))
-    #         return redirect(url_for('login'))
-    #     except:
-    #         abort(404)
-    # else:
-    #     return render_template('login.html')
-
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
@@ -116,21 +103,6 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
-
-    # if request.method == 'POST':
-    #     try:
-    #         if current_user.is_authenticated:
-    #             return redirect(url_for('dashboard'))
-    #         user_data = request.form.to_dict()
-    #         user_data['password'] = create_encrypted_password(
-    #             user_data['password'])
-    #         save_user_to_database(user_data)
-    #         flash('Your account has been created! You are now able to log in', 'success')
-    #         return redirect(url_for('login'))
-    #     except:
-    #         abort(404, description="Unknown error occured")
-    # else:
-    #     return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -148,7 +120,26 @@ def policies():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', title='Profile')
+    form = UpdateProfileForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
+        current_user.email = form.email.data
+        current_user.nick_name = form.nick_name.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        db.session.commit()
+        flash("Yout account has been updated!", 'success')
+        return redirect(url_for('profile'))
+    elif request.method == 'GET':
+        form.email.data = current_user.email
+        form.nick_name.data = current_user.nick_name
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
+    return render_template('profile.html', title='Profile', image_file=image_file, form=form)
 
 
 @app.route('/sensors', methods=['GET', 'POST'])
@@ -164,24 +155,21 @@ def logout():
     return redirect(url_for('login'))
 
 
-# def is_user_data_valid(user_data):
-#     user = User.query.filter_by(email=user_data['email']).first()
-#     if not user:
-#         flash('Inccorect email! Please try again.', 'danger')
-#         return False
-#     if user.password != create_encrypted_password(user_data['password']):
-#         flash('Inccorect password! Please try again.', 'danger')
-#         return False
-#     return True
-
-
 def create_encrypted_password(password):
     return hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
 
 
-# def save_user_to_database(user_data):
-#     user = User(email=user_data['email'], first_name=user_data['first_name'],
-#                 last_name=user_data['last_name'], nick_name=user_data['nick_name'],
-#                 password=user_data['password'])
-#     db.session.add(user)
-#     db.session.commit()
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+
+    picture_path = os.path.join(
+        app.root_path, 'static/profile_pics', picture_fn)
+    output_size = (180, 180)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    i.save(picture_path)
+    return picture_fn
