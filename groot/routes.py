@@ -62,6 +62,8 @@ def policies():
         db.session.commit()
         flash("Your policy has been created!", 'success')
         return redirect(url_for('policies'))
+    elif request.method == 'POST' and not form.validate_on_submit():
+        flash("Wrong policy details, please check in the policy form.", 'danger')
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image_file)
     return render_template('policies.html', title='Policies', user_policies=user_policies, form=form, image_file=image_file)
@@ -75,7 +77,10 @@ def toggle_policy(policy_id):
         abort(403)
     policy.is_active = not policy.is_active
     db.session.commit()
-    flash('Your Policy has been toggled!', 'success')
+    if policy.is_active == True:
+        flash('Your Policy has been activated!', 'success')
+    else:
+        flash('Your Policy has been deactivated!', 'danger')
     return redirect(url_for('policies'))
 
 
@@ -150,13 +155,16 @@ def save_picture(form_picture):
     i.save(picture_path)
     return picture_fn
 
+
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html")
 
+
 @app.errorhandler(403)
 def not_found(e):
     return render_template("403.html")
+
 
 @app.errorhandler(500)
 def not_found(e):
