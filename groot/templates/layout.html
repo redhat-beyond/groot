@@ -167,8 +167,7 @@
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
                                         data-toggle="dropdown" aria-expanded="false" href="#"><span
                                             class="d-none d-lg-inline mr-2 text-gray-600 small">{{ current_user.first_name + ' ' + current_user.last_name}}</span><img
-                                            class="border rounded-circle img-profile"
-                                            src="../static/img/180x180.png"></a>
+                                            class="border rounded-circle img-profile" src="{{ image_file }}"></a>
                                     <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu">
                                         <a class="dropdown-item" role="presentation" href="{{ url_for('profile') }}"><i
                                                 class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a>
