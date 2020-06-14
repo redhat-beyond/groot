@@ -2,6 +2,128 @@
 {% set active_page = "policies" %}
 
 {% block content %}
+
+<!-- Policy Modal -->
+<div class="modal fade" id="newPolicyModal" tabindex="-1" role="dialog" aria-labelledby="newPolicyModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="text-center">
+                    <h4 class="text-dark mb-4">Add New Policy</h4>
+                </div>
+                <form class="user" method="POST" action="policies">
+                    {{ form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ form.policy_name.label(class="form-control-label") }}
+
+                        {% if form.policy_name.errors %}
+                        {{ form.policy_name(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.policy_name.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.policy_name(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.plant_type.label(class="form-control-label") }}
+
+                        {% if form.plant_type.errors %}
+                        {{ form.plant_type(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.plant_type.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.plant_type(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.humidity.label(class="form-control-label") }}
+
+                        {% if form.humidity.errors %}
+                        {{ form.humidity(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.humidity.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.humidity(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.amount_light.label(class="form-control-label") }}
+
+                        {% if form.amount_light.errors %}
+                        {{ form.amount_light(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.amount_light.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.amount_light(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.irregation_frequency.label(class="form-control-label") }}
+
+                        {% if form.irregation_frequency.errors %}
+                        {{ form.irregation_frequency(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.irregation_frequency.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.irregation_frequency(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.irregation_amount.label(class="form-control-label") }}
+
+                        {% if form.irregation_amount.errors %}
+                        {{ form.irregation_amount(class="form-control form-control-user is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.irregation_amount.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        {{ form.irregation_amount(class="form-control form-control-user") }}
+                        {% endif %}
+                    </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm d-none d-sm-inline-block"
+                    data-dismiss="modal">Close</button>
+                {{ form.submit(class="btn btn-success btn-sm d-none d-sm-inline-block") }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <h3 class="text-dark mb-4">Policies</h3>
 <div class="card shadow">
     <div class="card-header py-3">
@@ -11,17 +133,44 @@
         <div class="row">
             <div class="col-md-6 text-nowrap">
                 <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                </div><a class="btn btn-success btn-sm d-none d-sm-inline-block" role="button" href="#"
-                    style="margin-right: 17px;"><i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;New Policy</a><a
-                    class="btn btn-dark btn-sm d-none d-sm-inline-block" role="button" href="#"
+                </div>
+                <button type="button" class="btn btn-success btn-sm d-none d-sm-inline-block" data-toggle="modal"
+                    data-target="#newPolicyModal">
+                    <i class="fas fa-plus fa-sm text-white-50"></i>&nbsp;New Policy
+                </button>
+                <a class="btn btn-dark btn-sm d-none d-sm-inline-block" role="button" href="#"
                     style="margin-right: 17px;"><i class="fas fa-minus fa-sm text-white-50"></i>&nbsp;Delete
                     Selected</a>
+
+                <script>
+                    setTimeout(function () {
+                        $('#policies-messages').fadeOut('fast');
+                    }, 4000); // <-- time in milliseconds
+                </script>
+
+                <div id="policies-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
             </div>
+
             <div class="col-md-6">
                 <div class="text-md-right dataTables_filter" id="dataTable_filter"><label><input type="search"
                             class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label>
                 </div>
             </div>
+
+
+
+
         </div>
         <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
             <table class="table dataTable my-0" id="dataTable">
@@ -69,13 +218,13 @@
                             </div>
                             {% endif%}
                         </td>
-                        <td>{{ policy.name }}</td>
+                        <td>{{ policy.policy_name }}</td>
                         <td>{{ policy.plant_type }}</td>
                         <td>{{ policy.humidity }}</td>
-                        <td>{{ policy.light }}</td>
-                        <td>{{ policy.irregation_frequency }}</td>
-                        <td>{{ policy.irregation_amount }}</td>
-                        <td>{{ policy.sensors }}</td>
+                        <td>{{ policy.amount_light }}</td>
+                        <td>{{ policy.irregation_frequency }} (per week)</td>
+                        <td>{{ policy.irregation_amount }} L</td>
+                        <td>{{ policy.policy_sensors|length }}</td>
                         <td>{{ policy.date_created }}</td>
                         <td>{{ policy.id }}</td>
                     </tr>
