@@ -46,6 +46,8 @@ class Policy(db.Model):
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(db.Integer, primary_key=True)
+    is_active = db.Column(db.Boolean, nullable=False,
+                          unique=False, default=False)
     policy_name = db.Column(db.String(20), nullable=False, unique=True)
     plant_type = db.Column(db.String(30), nullable=False)
     humidity = db.Column(db.Float, nullable=False)

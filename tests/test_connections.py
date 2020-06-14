@@ -1,7 +1,6 @@
-import urllib.request
 import pytest
+from run import app
 
-SITE_LOCATION = "http://localhost:5000"
 
-def test_connection():
-    assert urllib.request.urlopen(SITE_LOCATION).getcode() == 200
+def test_webserver_running(client):
+    assert client.get('/').status_code == 200

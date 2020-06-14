@@ -63,9 +63,9 @@ class NewPolicyForm(FlaskForm):
         min=2, max=20)], render_kw={"placeholder": "Policie's name..."})
     plant_type = StringField('Plant Type', validators=[DataRequired(), Length(
         min=2, max=30)], render_kw={"placeholder": "Plant's type..."})
-    humidity = FloatField('Humidity', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
+    humidity = FloatField('Humidity (%)', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
                            "placeholder": "Humidity percentage, example value: 15"})
-    amount_light = FloatField('Light Amount', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
+    amount_light = FloatField('Light Amount (%)', validators=[DataRequired(), NumberRange(0, 100,"Please enter a number between 0 - 100")], render_kw={
                                "placeholder": "Light percentage, example value: 15"})
     irregation_frequency = StringField('Irregation Frequency', validators=[
                                        DataRequired()], render_kw={"placeholder": "Times per week"})
