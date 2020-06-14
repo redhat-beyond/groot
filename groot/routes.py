@@ -4,72 +4,9 @@ from PIL import Image
 from flask import Flask, Response, render_template, request, redirect, url_for, flash, abort
 from run import app, db
 from groot.models import *
-from groot.forms import RegistrationForm, LoginForm, UpdateProfileForm
+from groot.forms import RegistrationForm, LoginForm, UpdateProfileForm, NewPolicyForm
 from flask_login import login_user, current_user, logout_user, login_required
 import hashlib
-
-user_policies = [
-    {
-        'name': 'Policy 1',
-        'plant_type': 'Mushrooms',
-        'humidity': '0.15',
-        'light': '0.73',
-        'irregation_frequency': '4',
-        'irregation_amount': '0.4',
-        'sensors': '3',
-        'date_created': '03.05.2020',
-        'id': '134623415',
-        'status': 'True'
-    },
-    {
-        'name': 'Policy 1',
-        'plant_type': 'Mushrooms',
-        'humidity': '0.15',
-        'light': '0.73',
-        'irregation_frequency': '4',
-        'irregation_amount': '0.4',
-        'sensors': '3',
-        'date_created': '03.05.2020',
-        'id': '134623415',
-        'status': 'True'
-    },
-    {
-        'name': 'Policy 2',
-        'plant_type': 'Apple Tree',
-        'humidity': '0.24',
-        'light': '0.68',
-        'irregation_frequency': '3',
-        'irregation_amount': '0.5',
-        'sensors': '2',
-        'date_created': '06.07.2020',
-        'id': '123423516',
-        'status': 'False'
-    },
-    {
-        'name': 'Policy 1',
-        'plant_type': 'Mushrooms',
-        'humidity': '0.15',
-        'light': '0.73',
-        'irregation_frequency': '4',
-        'irregation_amount': '0.4',
-        'sensors': '3',
-        'date_created': '03.05.2020',
-        'id': '134623415',
-        'status': 'True'
-    },
-    {
-        'name': 'Policy 2',
-        'plant_type': 'Apple Tree',
-        'humidity': '0.24',
-        'light': '0.68',
-        'irregation_frequency': '3',
-        'irregation_amount': '0.5',
-        'sensors': '2',
-        'date_created': '06.07.2020',
-        'id': '123423516',
-        'status': 'False'
-    }
-]
 
 
 @app.route("/")
@@ -114,7 +51,16 @@ def dashboard():
 @app.route('/policies', methods=['GET', 'POST'])
 @login_required
 def policies():
-    return render_template('policies.html', title='Policies', user_policies=user_policies)
+    user_policies = Policy.query.all()
+    form = NewPolicyForm()
+    if form.validate_on_submit():
+        newPolicy = Policy(policy_name=form.policy_name.data, plant_type=form.plant_type.data, humidity=form.humidity.data,
+                           amount_light=form.amount_light.data, irregation_frequency=form.irregation_frequency.data, irregation_amount=form.irregation_amount.data, writer=current_user.id)
+        db.session.add(newPolicy)
+        db.session.commit()
+        flash("Your policy has been created!", 'success')
+        return redirect(url_for('policies'))
+    return render_template('policies.html', title='Policies', user_policies=user_policies, form=form)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

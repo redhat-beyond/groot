@@ -2,8 +2,8 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from groot.models import User
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
+from groot.models import User, Policy
 
 
 class RegistrationForm(FlaskForm):
@@ -56,3 +56,27 @@ class LoginForm(FlaskForm):
                              DataRequired(), Length(min=2, max=50)], render_kw={"placeholder": "Password"})
     remember = BooleanField('Remeber Me')
     submit = SubmitField('Login')
+
+
+class NewPolicyForm(FlaskForm):
+    policy_name = StringField('Name', validators=[DataRequired(), Length(
+        min=2, max=20)], render_kw={"placeholder": "Policie's name..."})
+    plant_type = StringField('Plant Type', validators=[DataRequired(), Length(
+        min=2, max=30)], render_kw={"placeholder": "Plant's type..."})
+    humidity = StringField('Humidity', validators=[DataRequired()], render_kw={
+                           "placeholder": "Humidity percentage, example value: 0.15"})
+    amount_light = StringField('Light Amount', validators=[DataRequired()], render_kw={
+                               "placeholder": "Light percentage, example value: 0.15"})
+    irregation_frequency = StringField('Irregation Frequency', validators=[
+                                       DataRequired()], render_kw={"placeholder": "Times per week"})
+    irregation_amount = StringField('Irregation Amount', validators=[
+                                    DataRequired()], render_kw={"placeholder": "Litres"})
+
+    submit = SubmitField('Add Policy')
+
+    def validate_policy_name(self, policy_name):
+        policy_name = Policy.query.filter_by(
+            policy_name=policy_name.data).first()
+        if policy_name:
+            raise ValidationError(
+                'This policy name is taken, please choose a different one.')
