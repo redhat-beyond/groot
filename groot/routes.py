@@ -45,7 +45,9 @@ def register():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('index.html', title='Dashboard')
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
+    return render_template('index.html', title='Dashboard', image_file=image_file)
 
 
 @app.route('/policies', methods=['GET', 'POST'])
@@ -60,7 +62,33 @@ def policies():
         db.session.commit()
         flash("Your policy has been created!", 'success')
         return redirect(url_for('policies'))
-    return render_template('policies.html', title='Policies', user_policies=user_policies, form=form)
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
+    return render_template('policies.html', title='Policies', user_policies=user_policies, form=form, image_file=image_file)
+
+
+@app.route("/policy/<int:policy_id>/toggle", methods=['POST'])
+@login_required
+def toggle_policy(policy_id):
+    policy = Policy.query.get_or_404(policy_id)
+    if policy.writer != current_user.id:
+        abort(403)
+    policy.is_active = not policy.is_active
+    db.session.commit()
+    flash('Your Policy has been toggled!', 'success')
+    return redirect(url_for('policies'))
+
+
+@app.route("/policy/<int:policy_id>/delete", methods=['POST'])
+@login_required
+def delete_policy(policy_id):
+    policy = Policy.query.get_or_404(policy_id)
+    if policy.writer != current_user.id:
+        abort(403)
+    db.session.delete(policy)
+    db.session.commit()
+    flash('Your policy has been deleted!', 'success')
+    return redirect(url_for('policies'))
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -91,7 +119,9 @@ def profile():
 @app.route('/sensors', methods=['GET', 'POST'])
 @login_required
 def sensors():
-    return render_template('sensors.html', title='Sensors')
+    image_file = url_for(
+        'static', filename='profile_pics/' + current_user.image_file)
+    return render_template('sensors.html', title='Sensors', image_file=image_file)
 
 
 @app.route("/logout")
