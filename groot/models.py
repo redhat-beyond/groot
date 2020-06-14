@@ -48,8 +48,8 @@ class Policy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     policy_name = db.Column(db.String(20), nullable=False, unique=True)
     plant_type = db.Column(db.String(30), nullable=False)
-    humidity = db.Column(db.Integer, nullable=False)
-    amount_light = db.Column(db.Integer, nullable=False)
+    humidity = db.Column(db.Float, nullable=False)
+    amount_light = db.Column(db.Float, nullable=False)
     irregation_frequency = db.Column(db.Integer, nullable=False)
     irregation_amount = db.Column(db.Integer, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False,
