@@ -142,15 +142,23 @@
                     style="margin-right: 17px;"><i class="fas fa-minus fa-sm text-white-50"></i>&nbsp;Delete
                     Selected</a>
 
-                {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    {{ message }}
+                <script>
+                    setTimeout(function () {
+                        $('#policies-messages').fadeOut('fast');
+                    }, 4000); // <-- time in milliseconds
+                </script>
+
+                <div id="policies-messages">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                 </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
 
             </div>
 
@@ -210,13 +218,13 @@
                             </div>
                             {% endif%}
                         </td>
-                        <td>{{ policy.name }}</td>
+                        <td>{{ policy.policy_name }}</td>
                         <td>{{ policy.plant_type }}</td>
                         <td>{{ policy.humidity }}</td>
-                        <td>{{ policy.light }}</td>
+                        <td>{{ policy.amount_light }}</td>
                         <td>{{ policy.irregation_frequency }} (per week)</td>
                         <td>{{ policy.irregation_amount }} L</td>
-                        <td>{{ policy.sensors }}</td>
+                        <td>{{ policy.policy_sensors|length }}</td>
                         <td>{{ policy.date_created }}</td>
                         <td>{{ policy.id }}</td>
                     </tr>
