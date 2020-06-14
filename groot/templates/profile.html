@@ -8,8 +8,18 @@
         <div class="card mb-3">
             <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4" src="{{ image_file }}"
                     width="160" height="160">
-                <div class="mb-3"><button class="btn btn-success btn-sm" type="button">Change
-                        Photo</button></div>
+                <div class="mb-3">
+                    <form method="POST" acction="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+
+                        {{ form.picture.label }}
+                        {{ form.picture(class="btn btn-sm") }}
+                        {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                        <br /><span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -21,96 +31,95 @@
                         <p class="text-dark m-0 font-weight-bold">User Settings</p>
                     </div>
                     <div class="card-body">
-                        <form method="POST">
-                            {{ form.hidden_tag() }}
 
-                            {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                            {% for category, message in messages %}
-                            <div class="alert alert-{{ category }}">
-                                {{ message }}
-                            </div>
-                            {% endfor %}
-                            {% endif %}
-                            {% endwith %}
 
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        {{ form.nick_name.label(class="form-control-label") }}
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
 
-                                        {% if form.nick_name.errors %}
-                                        {{ form.nick_name(class="form-control is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.nick_name.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ form.nick_name(class="form-control") }}
-                                        {% endif %}
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    {{ form.nick_name.label(class="form-control-label") }}
+
+                                    {% if form.nick_name.errors %}
+                                    {{ form.nick_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.nick_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-
-                                        {{ form.email.label(class="form-control-label") }}
-
-                                        {% if form.email.errors %}
-                                        {{ form.email(class="form-control is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.email.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ form.email(class="form-control") }}
-                                        {% endif %}
-
-                                    </div>
+                                    {% else %}
+                                    {{ form.nick_name(class="form-control") }}
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group">
+                            <div class="col">
+                                <div class="form-group">
 
-                                        {{ form.first_name.label(class="form-control-label") }}
+                                    {{ form.email.label(class="form-control-label") }}
 
-                                        {% if form.first_name.errors %}
-                                        {{ form.first_name(class="form-control is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.first_name.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ form.first_name(class="form-control") }}
-                                        {% endif %}
-
+                                    {% if form.email.errors %}
+                                    {{ form.email(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
                                     </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
+                                    {% else %}
+                                    {{ form.email(class="form-control") }}
+                                    {% endif %}
 
-                                        {{ form.last_name.label(class="form-control-label") }}
-
-                                        {% if form.last_name.errors %}
-                                        {{ form.last_name(class="form-control is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for error in form.last_name.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ form.last_name(class="form-control") }}
-                                        {% endif %}
-
-                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                {{ form.submit(class="btn btn-success btn-sm") }}
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    {{ form.first_name.label(class="form-control-label") }}
+
+                                    {% if form.first_name.errors %}
+                                    {{ form.first_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.first_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.first_name(class="form-control") }}
+                                    {% endif %}
+
+                                </div>
                             </div>
+                            <div class="col">
+                                <div class="form-group">
+
+                                    {{ form.last_name.label(class="form-control-label") }}
+
+                                    {% if form.last_name.errors %}
+                                    {{ form.last_name(class="form-control is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.last_name.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    {{ form.last_name(class="form-control") }}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-success btn-sm") }}
+                        </div>
                         </form>
                     </div>
                 </div>

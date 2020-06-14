@@ -1,3 +1,5 @@
+import os
+import secrets
 from flask import Flask, Response, render_template, request, redirect, url_for, flash, abort
 from run import app, db
 from groot.models import *
@@ -119,6 +121,9 @@ def policies():
 def profile():
     form = UpdateProfileForm()
     if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.image_file = picture_file
         current_user.email = form.email.data
         current_user.nick_name = form.nick_name.data
         current_user.first_name = form.first_name.data
@@ -151,3 +156,13 @@ def logout():
 
 def create_encrypted_password(password):
     return hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        app.root_path, 'static/profile_pics', picture_fn)
+    form_picture.save(picture_path)
+    return picture_fn
