@@ -53,7 +53,7 @@ def dashboard():
 @app.route('/policies', methods=['GET', 'POST'])
 @login_required
 def policies():
-    user_policies = Policy.query.all()
+    all_policies = Policy.query.all()
     form = NewPolicyForm()
     if form.validate_on_submit():
         newPolicy = Policy(policy_name=form.policy_name.data, plant_type=form.plant_type.data, humidity=form.humidity.data,
@@ -66,7 +66,7 @@ def policies():
         flash("Wrong policy details, please check in the policy form.", 'danger')
     image_file = url_for(
         'static', filename='profile_pics/' + current_user.image_file)
-    return render_template('policies.html', title='Policies', user_policies=user_policies, form=form, image_file=image_file)
+    return render_template('policies.html', title='Policies', all_policies=all_policies, form=form, image_file=image_file)
 
 
 @app.route("/policy/<int:policy_id>/toggle", methods=['POST'])
@@ -109,7 +109,7 @@ def profile():
         current_user.first_name = form.first_name.data
         current_user.last_name = form.last_name.data
         db.session.commit()
-        flash("Yout account has been updated!", 'success')
+        flash("Your account has been updated!", 'success')
         return redirect(url_for('profile'))
     elif request.method == 'GET':
         form.email.data = current_user.email
