@@ -3,6 +3,7 @@
 log.txt
 *.env
 **/__pycache__
+.DS_Store
 
 !groot/static/profile_pics/default_profile.png
 groot/static/profile_pics/*

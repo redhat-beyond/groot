@@ -188,7 +188,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for policy in user_policies %}
+                    {% for policy in all_policies %}
+                    {% if policy.writer == current_user.id %}
                     <!-- Delete Modal -->
                     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
                         aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -223,7 +224,7 @@
                                 <button class="btn btn-success active btn-sm" type="button">
                                     Active&nbsp;
                                 </button>
-                                {% if  policy.writer == current_user.id %}
+
                                 <button class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-expanded="false" type="button"></button>
                                 <div class="dropdown-menu" role="menu">
@@ -231,14 +232,14 @@
                                         <input class="dropdown-item" type="submit" value="Deactivate">
                                     </form>
                                 </div>
-                                {% endif %}
+
                             </div>
                             {% else %}
                             <div class="btn-group">
                                 <button class="btn btn-secondary active btn-sm" type="button">
                                     Inactive&nbsp;
                                 </button>
-                                {% if  policy.writer == current_user.id %}
+
                                 <button class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-expanded="false" type="button"></button>
                                 <div class="dropdown-menu" role="menu">
@@ -246,7 +247,7 @@
                                         <input class="dropdown-item" type="submit" value="Activate">
                                     </form>
                                 </div>
-                                {% endif %}
+
                             </div>
                             {% endif%}
                         </td>
@@ -260,6 +261,7 @@
                         <td>{{ policy.date_created }}</td>
                         <td>{{ policy.id }}</td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
                 <tfoot>
@@ -270,8 +272,8 @@
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                    {% if user_policies|length > 0 %}
-                    Showing 1 to {{ user_policies|length }}
+                    {% if current_user.policies_wrote|length > 0 %}
+                    Showing 1 to {{ current_user.policies_wrote|length }}
                     {% else %}
                     You have no policies
                     {% endif%}
@@ -302,7 +304,7 @@
                     <tr>
                         <th></th>
                         <th>Name</th>
-                        <th>Author</th>
+                        <th>Author ID</th>
                         <th>Plant Type</th>
                         <th>Humidity</th>
                         <th>Light</th>
@@ -315,22 +317,34 @@
                     </tr>
                 </thead>
                 <tbody>
+
+
+
+                    {% for policy in all_policies %}
+
                     <tr>
                         <td>
+                            {% if policy.writer != current_user.id %}
                             <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
                                     type="button">Download</button><button class="btn btn-light btn-sm" type="button"
                                     disabled=""><i class="fa fa-download"></i>&nbsp;15&nbsp;</button></div>
+                            {% else %}
+                            <div class="btn-group" role="group"><button class="btn btn-light inactive btn-sm"
+                                    type="button" disabled="">Download</button><button class="btn btn-light btn-sm"
+                                    type="button" disabled=""><i class="fa fa-download"></i>&nbsp;15&nbsp;</button>
+                            </div>
+                            {% endif %}
                         </td>
-                        <td>Policy 1</td>
-                        <td>Avi</td>
-                        <td>Mushrooms</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>134623415</td>
+                        <td>{{ policy.policy_name }}</td>
+                        <td>{{ policy.writer }}</td>
+                        <td>{{ policy.plant_type }}</td>
+                        <td>{{ policy.humidity }}%</td>
+                        <td>{{ policy.amount_light }}%</td>
+                        <td>{{ policy.irregation_frequency }} (per week)</td>
+                        <td>{{ policy.irregation_amount }} L</td>
+                        <td>{{ policy.policy_sensors|length }}</td>
+                        <td>{{ policy.date_created }}</td>
+                        <td>{{ policy.id }}</td>
                         <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
                             <button class="btn btn-sm text-center" type="button"
                                 style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
@@ -338,75 +352,7 @@
                                     style="font-size: 26px;color: rgb(212,218,237);"></i></button><strong>89</strong>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
-                                    type="button">Download</button><button class="btn btn-light btn-sm" type="button"
-                                    disabled=""><i class="fa fa-download"></i>&nbsp;13&nbsp;</button></div>
-                        </td>
-                        <td>Policy 2</td>
-                        <td>Moshe</td>
-                        <td>Apple Tree</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>123423516</td>
-                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
-                            <button class="btn btn-sm text-center" type="button"
-                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
-                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
-                                    style="font-size: 26px;color: rgb(28,200,138);"></i></button><strong>151</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
-                                    type="button">Download</button><button class="btn btn-light active btn-sm"
-                                    type="button" disabled=""><i class="fa fa-download"></i>&nbsp;9&nbsp;</button></div>
-                        </td>
-                        <td>Policy 3</td>
-                        <td>Yosi</td>
-                        <td>Onions</td>
-                        <td>15%</td>
-                        <td>73%</td>
-                        <td>4 (per week)</td>
-                        <td>0.4 L</td>
-                        <td>3</td>
-                        <td>03.05.2020</td>
-                        <td>546422261</td>
-                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
-                            <button class="btn btn-sm text-center" type="button"
-                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
-                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
-                                    style="font-size: 26px;color: rgb(28,200,138);"></i></button><strong>7</strong>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="btn-group" role="group"><button class="btn btn-light active btn-sm"
-                                    type="button">Download</button><button class="btn btn-light active btn-sm"
-                                    type="button" disabled=""><i class="fa fa-download"></i>&nbsp;2&nbsp;</button></div>
-                        </td>
-                        <td>Policy 4</td>
-                        <td>Gadi</td>
-                        <td>Weed</td>
-                        <td>100%</td>
-                        <td>100%</td>
-                        <td>7 (per week)</td>
-                        <td>3.1 L</td>
-                        <td>5</td>
-                        <td>03.05.2020</td>
-                        <td>132634633</td>
-                        <td class="text-center d-xl-flex justify-content-xl-start align-items-xl-center">
-                            <button class="btn btn-sm text-center" type="button"
-                                style="background-color: rgba(0,0,0,0);opacity: 1;"><i class="fa fa-star"
-                                    data-toggle="tooltip" data-bs-tooltip="" title="Star Policy"
-                                    style="font-size: 26px;color: rgb(212,218,237);"></i></button><strong>84</strong>
-                        </td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr></tr>
@@ -416,7 +362,12 @@
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
-                    Showing 1 to 4 of 27</p>
+                    {% if all_policies|length > 0 %}
+                    Showing 1 to {{ all_policies|length }}
+                    {% else %}
+                    There are no policies
+                    {% endif%}
+                </p>
             </div>
         </div>
     </div>
